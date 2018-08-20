@@ -6,10 +6,12 @@
 package pl.learningsetpreparator;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import pl.learningsetpreparator.entities.URLPhotoResource;
+import pl.learningsetpreparator.enumparameters.AdditionalWords;
 
 /**
  *
@@ -34,8 +36,12 @@ public class SearchHelper {
     }
     public List<URLPhotoResource> getPhotosOfFood(String name)
     {
-        Set<URL> addresses = bingHelper.getResultsImages(name);
-        addresses.addAll(googleHelper.getResultsImages(name));
+        Set<URL> addresses = new HashSet<>();
+        /*for(AdditionalWords additionalWord:AdditionalWords.values())
+        {*/
+            addresses.addAll(bingHelper.getResultsImages(name+" "/*+additionalWord*/));
+            addresses.addAll(googleHelper.getResultsImages(name+" "/*+additionalWord*/));
+        /*}*/
         List<URLPhotoResource> result = addresses.stream().
                 map(addr -> new URLPhotoResource(addr,nameExtractor.extractNameFromURL(addr))).
                 collect(Collectors.toList());

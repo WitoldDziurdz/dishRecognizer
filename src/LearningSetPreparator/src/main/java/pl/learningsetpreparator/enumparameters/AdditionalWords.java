@@ -13,14 +13,19 @@ import java.util.List;
  * @author maciejszwaczka
  */
 public enum AdditionalWords {
-    Skladniki,
-    Przepis,
-    Fit,
-    Warzywne,
-    Miesne,
-    Porcja,
+    Skladniki("Skladniki"),
+    Przepis("Przepis"),
+    Fit("Fit"),
+    Warzywne("Warzywne"),
+    Miesne("Miesne"),
+    Porcja("Porcja"),
     EMPTY("");
     final String name;
     AdditionalWords(String name) { this.name = name; }
     AdditionalWords() { this(null); }
+    @Override
+    public String toString()
+    {
+        return this.name;
+    }
 }

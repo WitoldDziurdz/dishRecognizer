@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.net.ssl.SSLHandshakeException;
 import pl.learningsetpreparator.entities.FoodResource;
 import pl.learningsetpreparator.entities.URLPhotoResource;
+import pl.learningsetpreparator.enumparameters.AdditionalWords;
 /**
  *
  * @author maciejszwaczka
@@ -36,15 +37,20 @@ public class DownloadFilesHelper {
     }
     public void downloadFilesOfFood(List<String> foodNames) {
        for(String foodRes:foodNames) {
-            File folderWithPhotosOfDish=new File(learningSetFolder+"\\"+foodRes);
-            folderWithPhotosOfDish.mkdir();
-            for(URLPhotoResource urlRes:searchHelper.getPhotosOfFood(foodRes))
+           File folderWithPhotosOfDishWA=new File(learningSetFolder+"\\"+foodRes);
+           folderWithPhotosOfDishWA.mkdir();
+           for(AdditionalWords additionalWord:AdditionalWords.values())
             {
-                try {
-                    downloadFileFromUrl(urlRes,folderWithPhotosOfDish);
-                } catch (Exception ex) {
-                    System.out.println(urlRes.getUrl());
-                    ex.printStackTrace();
+                File folderWithPhotosOfDish=new File(learningSetFolder+"\\"+foodRes+"\\"+additionalWord);
+                folderWithPhotosOfDish.mkdir();
+                for(URLPhotoResource urlRes:searchHelper.getPhotosOfFood(foodRes))
+                {
+                    try {
+                        downloadFileFromUrl(urlRes,folderWithPhotosOfDish);
+                    } catch (Exception ex) {
+                        System.out.println(urlRes.getUrl());
+                        ex.printStackTrace();
+                    }
                 }
             }
        }
