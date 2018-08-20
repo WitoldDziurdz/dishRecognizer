@@ -56,7 +56,7 @@ public class GoogleSearchHelper {
                 listOfImages.setKey(key);
                 listOfImages.setSearchType("image");
                 listOfImages.setCx(cx);
-                listOfImages.setStart(10l*i);
+                listOfImages.setStart(1+10l*i);
                 listOfImages.setNum(10l);
                 listOfImages.setQ(foodName);
                 Search results= listOfImages.execute();

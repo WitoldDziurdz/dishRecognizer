@@ -37,13 +37,9 @@ public class DownloadFilesHelper {
     }
     public void downloadFilesOfFood(List<String> foodNames) {
        for(String foodRes:foodNames) {
-           File folderWithPhotosOfDishWA=new File(learningSetFolder+"\\"+foodRes);
-           folderWithPhotosOfDishWA.mkdir();
-           for(AdditionalWords additionalWord:AdditionalWords.values())
-            {
-                File folderWithPhotosOfDish=new File(learningSetFolder+"\\"+foodRes+"\\"+additionalWord);
-                folderWithPhotosOfDish.mkdir();
-                for(URLPhotoResource urlRes:searchHelper.getPhotosOfFood(foodRes))
+           File folderWithPhotosOfDish=new File(learningSetFolder+"\\"+foodRes);
+           folderWithPhotosOfDish.mkdir();
+           for(URLPhotoResource urlRes:searchHelper.getPhotosOfFood(foodRes))
                 {
                     try {
                         downloadFileFromUrl(urlRes,folderWithPhotosOfDish);
@@ -54,7 +50,6 @@ public class DownloadFilesHelper {
                 }
             }
        }
-    }
     public void downloadFileFromUrl(URLPhotoResource url,File folderWithPhotos) throws Exception
     {
         System.setProperty("http.agent", "");       
