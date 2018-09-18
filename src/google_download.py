@@ -8,7 +8,7 @@ api_key = "AIzaSyAEz3e4ve7aFU3iui-FfYXqXF2uP4oFK8I"
 
 service = build('customsearch', 'v1', developerKey=api_key)
 request = service.cse().list(
-    q='butterfly',
+    q='enter search phrase here',
     cx='015941098266592620936:divui1smer0',
     searchType='image',
     num=3,pyt
