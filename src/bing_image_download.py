@@ -5,7 +5,7 @@ subscription_key = '9f4746d3f2de467a9b6e816810d4c383'
 assert subscription_key
 
 search_url = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
-search_term = "butterfly"
+search_term = "enter search phrase here"
 
 offset = 0
 count = 20
