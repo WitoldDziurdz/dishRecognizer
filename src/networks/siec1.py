@@ -62,21 +62,6 @@ model.add(layers.Dense(512, activation='relu'))
 model.add(layers.Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer=optimizers.RMSprop(lr=1e-4), metrics=['acc'])
 
-model = Sequential()
-
-model.add(Convolution2D(32, 3, input_shape=(32, 32, 3), activation='relu'))
-model.add(Convolution2D(32, 3, activation='relu'))
-model.add(MaxPooling2D(pool_size=(2,2)))
-model.add(Dropout(rate=0.1))
-model.add(Convolution2D(64, 3, activation='relu'))
-model.add(Convolution2D(64, 3, activation='relu'))
-model.add(MaxPooling2D(pool_size=(2,2)))
-model.add(Dropout(rate=0.2))
-model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(rate=0.3))
-model.add(Dense(10, activation='sigmoid'))
-
 #training
 history = model.fit_generator(
      train_generator,
