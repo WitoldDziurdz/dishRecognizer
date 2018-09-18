@@ -58,8 +58,6 @@ for offset in range(0, estNumResults, GROUP_SIZE):
 			f.close()
 
 		except Exception as e:
-			# check to see if our exception is in our list of
-			# exceptions to check for
 			if type(e) in EXCEPTIONS:
 				print("[INFO] skipping: {}".format(v["contentUrl"]))
 				continue
