@@ -1,2 +1,3 @@
 .idea/
-src/networks/network_tools/__pycache__
+src/networks/network_tools/__pycache__/
+src/LearningSetPreparator/.idea/
