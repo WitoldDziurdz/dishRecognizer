@@ -1,0 +1,10 @@
+- git checkout -b"nowy branch"
+  wnosimy zmiany. po zmianach 
+- git checkout master
+- git pull (pullujemy na wszelki wypadek nowe zmiany)
+- git checkout nowy_branch
+- git merge master (na nowym branchu to powoduje ze wszytkie konfllikty sa rozwiazane na nowym branchu i nikt nie spierdoli mastera)
+- git checkout master 
+- git merge --squash nowybranch (squash wszytkie kommity pakuje do jednej zmiany, wiec na masterze tylko jeden kommit zamiast 10 *** kommitow)
+- git commit -m"zmany"
+- git push (pushujemy zmiany do mastera)
