@@ -3,7 +3,7 @@ from keras import layers
 from keras import models
 from keras import optimizers
 from keras.applications import VGG16
-
+from keras.optimizers import SGD
 
 def get_conv_network():
     model = models.Sequential()
@@ -46,4 +46,59 @@ def get_conv_VGG16():
                   metrics=['acc'])
     return model
 
+def get_conv_food101_VGG16():
+    conv_base = VGG16(weights='imagenet',
+                      include_top=False,
+                      input_shape=(150, 150, 3))
 
+    conv_base.trainable = True
+    set_trainable = False
+    for layer in conv_base.layers:
+        if layer.name == 'block5_conv1':
+            set_trainable = True
+        if set_trainable:
+            layer.trainable = True
+        else:
+            layer.trainable = False
+
+    model = models.Sequential()
+    model.add(conv_base)
+    model.add(layers.Flatten())
+    model.add(layers.Dense(256, activation='relu'))
+    model.add(layers.Dense(101, activation='softmax'))
+    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=sgd,
+                  metrics=['acc'])
+    return model
+
+
+
+def get_conv_food11_VGG16():
+    conv_base = VGG16(weights='imagenet',
+                      include_top=False,
+                      input_shape=(150, 150, 3))
+
+    conv_base.trainable = True
+    set_trainable = False
+    for layer in conv_base.layers:
+        if layer.name == 'block5_conv1':
+            set_trainable = True
+        if set_trainable:
+            layer.trainable = True
+        else:
+            layer.trainable = False
+
+    model = models.Sequential()
+    model.add(conv_base)
+    model.add(layers.Flatten())
+    model.add(layers.Dense(256, activation='relu'))
+    model.add(layers.Dense(11, activation='softmax'))
+    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=sgd,
+                  metrics=['acc'])
+    return model
+
+if __name__ == "__main__":
+    get_conv_food101_VGG16().summary()

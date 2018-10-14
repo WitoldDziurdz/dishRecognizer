@@ -1,41 +1,80 @@
 import matplotlib.pyplot as plt
 import os
 from keras.preprocessing.image import ImageDataGenerator
-
 class DataGenerator:
-    def set_food_nonfood_data(self, base_dir):
-        train_dir = os.path.join(base_dir, 'training')
-        validation_dir = os.path.join(base_dir, 'validation')
-        test_dir = os.path.join(base_dir, 'evaluation')
-        train_datagen = ImageDataGenerator(rescale=1. / 255,
-                                           rotation_range=40,
+    def __init__(self, base_dir):
+        self.base_dir = base_dir
+        self.train_dir = os.path.join(base_dir, 'training')
+        self.validation_dir = os.path.join(base_dir, 'validation')
+        self.test_dir = os.path.join(base_dir, 'evaluation')
+
+        self.train_datagen = ImageDataGenerator(rescale=1. / 255,
+                                           rotation_range=30,
                                            width_shift_range=0.2,
                                            height_shift_range=0.2,
                                            shear_range=0.2,
                                            zoom_range=0.2,
                                            horizontal_flip=True)
 
-        test_datagen = ImageDataGenerator(rescale=1. / 255)
+        self.test_datagen = ImageDataGenerator(rescale=1. / 255)
 
-        self.train_generator = train_datagen.flow_from_directory(
-            train_dir,
+    def set_food_nonfood_data(self):
+
+        self.train_generator = self.train_datagen.flow_from_directory(
+            self.train_dir,
             target_size=(150, 150),
             batch_size=32,
             class_mode='binary')
 
-        self.validation_generator = test_datagen.flow_from_directory(
-            validation_dir,
+        self.validation_generator = self.test_datagen.flow_from_directory(
+            self.validation_dir,
             target_size=(150, 150),
             batch_size=32,
             class_mode='binary')
 
-        self.test_generator = test_datagen.flow_from_directory(
-            test_dir,
+        self.test_generator = self.test_datagen.flow_from_directory(
+            self.test_dir,
             target_size=(150, 150),
             batch_size=20,
             class_mode='binary')
 
-    #add new data methods like 101 food
+    def set_101_food_categorical(self):
+        self.train_generator = self.train_datagen.flow_from_directory(
+            self.train_dir,
+            target_size=(150, 150),
+            batch_size=64,
+            class_mode='categorical')
+
+        self.validation_generator = self.test_datagen.flow_from_directory(
+            self.validation_dir,
+            target_size=(150, 150),
+            batch_size=64,
+            class_mode='categorical')
+
+        self.test_generator = self.test_datagen.flow_from_directory(
+            self.test_dir,
+            target_size=(150, 150),
+            batch_size=32,
+            class_mode='categorical')
+
+    def set_11_food_categorical(self):
+        self.train_generator = self.train_datagen.flow_from_directory(
+            self.train_dir,
+            target_size=(150, 150),
+            batch_size=64,
+            class_mode='categorical')
+
+        self.validation_generator = self.test_datagen.flow_from_directory(
+            self.validation_dir,
+            target_size=(150, 150),
+            batch_size=64,
+            class_mode='categorical')
+
+        self.test_generator = self.test_datagen.flow_from_directory(
+            self.test_dir,
+            target_size=(150, 150),
+            batch_size=32,
+            class_mode='categorical')
 
 
 def visualization_loss_and_accuracy(history):
