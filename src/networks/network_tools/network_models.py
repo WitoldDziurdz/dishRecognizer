@@ -1,8 +1,8 @@
-
 from keras import layers
 from keras import models
 from keras import optimizers
 from keras.applications import VGG16
+from keras.applications import InceptionV3
 from keras.optimizers import SGD
 
 def get_conv_network():
@@ -64,14 +64,28 @@ def get_conv_food101_VGG16():
     model = models.Sequential()
     model.add(conv_base)
     model.add(layers.Flatten())
-    model.add(layers.Dense(256, activation='relu'))
-    model.add(layers.Dense(101, activation='softmax'))
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(101, activation='sigmoid'))
     sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(loss='categorical_crossentropy',
                   optimizer=sgd,
                   metrics=['acc'])
+    
     return model
 
+def get_conv_food101_inception_v3():
+    conv_base = InceptionV3(weights='imagenet', include_top=False, input_shape=(150, 150, 3))
+    
+    model = models.Sequential()
+    model.add(conv_base)
+    model.add(layers.Flatten())
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(101, activation='softmax'))
+    
+    opt = SGD(lr=.01, momentum=.9)
+    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+
+    return model
 
 
 def get_conv_food11_VGG16():
