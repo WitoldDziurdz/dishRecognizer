@@ -8,7 +8,6 @@ import keras
 from keras.preprocessing.image import ImageDataGenerator
 
 model = Sequential()
-
 model.add(Convolution2D(32, 3, input_shape=(32, 32, 3), activation='relu'))
 model.add(Convolution2D(32, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))

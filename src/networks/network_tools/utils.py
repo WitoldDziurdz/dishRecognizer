@@ -42,38 +42,38 @@ class DataGenerator:
         self.train_generator = self.train_datagen.flow_from_directory(
             self.train_dir,
             target_size=(150, 150),
-            batch_size=64,
+            batch_size=72,
             class_mode='categorical')
 
         self.validation_generator = self.test_datagen.flow_from_directory(
             self.validation_dir,
             target_size=(150, 150),
-            batch_size=64,
+            batch_size=72,
             class_mode='categorical')
 
         self.test_generator = self.test_datagen.flow_from_directory(
             self.test_dir,
             target_size=(150, 150),
-            batch_size=32,
+            batch_size=72,
             class_mode='categorical')
 
     def set_11_food_categorical(self):
         self.train_generator = self.train_datagen.flow_from_directory(
             self.train_dir,
             target_size=(150, 150),
-            batch_size=64,
+            batch_size=40,
             class_mode='categorical')
 
         self.validation_generator = self.test_datagen.flow_from_directory(
             self.validation_dir,
             target_size=(150, 150),
-            batch_size=64,
+            batch_size=40,
             class_mode='categorical')
 
         self.test_generator = self.test_datagen.flow_from_directory(
             self.test_dir,
             target_size=(150, 150),
-            batch_size=32,
+            batch_size=40,
             class_mode='categorical')
 
 
@@ -95,3 +95,12 @@ def visualization_loss_and_accuracy(history):
     plt.show()
     pass
 
+def save_model(model, path_name, test_acc):
+    model_json = model.to_json()
+    file_name = path_name + "_" + str(test_acc);
+    with open(file_name + ".json", "w") as json_file:
+        json_file.write(model_json)
+    # serialize weights to HDF5
+    model.save_weights(file_name + ".h5")
+    print("Saved model to disk")
+    pass
