@@ -1,11 +1,12 @@
-from src.networks.network_tools import utils
-from src.networks.network_tools import network_models as m
-from keras.callbacks import CSVLogger
+from network_tools import utils
+from network_tools import network_models as m
+from keras.callbacks import CSVLogger, ModelCheckpoint
 
 def main():
     # directories
     #base_dir = 'C:\data'
-    base_dir = 'C:\\data\\101food'
+    #base_dir = 'C:\\data\\101food'
+    base_dir = 'data'
 
     # data generate
     data = utils.DataGenerator(base_dir)
@@ -17,17 +18,21 @@ def main():
     #model = m.get_conv_VGG16()
     #model = m.get_conv_food11_VGG16()
     model = m.get_conv_food101_VGG16()
+    #model = m.get_conv_food101_NASNet()
 
     # log, one log for many network
-    path_log = "C:\\praca_inzynierska\\dishRecognizer\\src\\models\\food101\\log.csv"
+    #path_log = "C:\\praca_inzynierska\\dishRecognizer\\src\\models\\food101\\log.csv"
+    path_log = "log.csv"
     csv_logger = CSVLogger(path_log, append=True, separator=';')
+    
+    checkpointer = ModelCheckpoint(filepath='model_VGG16.{epoch:02d}-{val_loss:.2f}.hdf5', verbose=1, save_best_only=True)
 
     # training
     history = model.fit_generator(
          data.train_generator,
          steps_per_epoch=1000,
-         epochs=40,
-         callbacks=[csv_logger],
+         epochs=20,
+         callbacks=[csv_logger, checkpointer],
          validation_data=data.validation_generator,
          validation_steps=100, workers=16)
 
@@ -36,7 +41,8 @@ def main():
     print('test acc:', test_acc)
 
     # save model, please check file name
-    path_name = "C:\\praca_inzynierska\\dishRecognizer\\src\\models\\food101\\network_food11"
+    #path_name = "C:\\praca_inzynierska\\dishRecognizer\\src\\models\\food101\\network_food11"
+    path_name = "..\models\food101\network_food101"
     utils.save_model(model, path_name, test_acc)
 
     # loss and accuracy visualization

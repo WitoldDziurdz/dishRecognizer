@@ -1,8 +1,8 @@
-
 from keras import layers
 from keras import models
 from keras import optimizers
 from keras.applications import VGG16
+from keras.applications import NASNetLarge
 from keras.optimizers import SGD
 
 def get_conv_network():
@@ -53,27 +53,56 @@ def get_conv_food101_VGG16():
 
     conv_base.summary()
 
-    conv_base.trainable = True
-    set_trainable = False
+    #conv_base.trainable = True
+    conv_base.trainable = False
+    #set_trainable = False
+    #for layer in conv_base.layers:
+    #    if layer.name == 'block4_conv1':
+    #        set_trainable = True
+    #    if set_trainable:
+    #        layer.trainable = True
+    #    else:
+    #        layer.trainable = False
+
     for layer in conv_base.layers:
-        if layer.name == 'block4_conv1':
-            set_trainable = True
-        if set_trainable:
-            layer.trainable = True
-        else:
-            layer.trainable = False
+        layer.set_trainable = False
+      
+    conv_base.summary()
 
     model = models.Sequential()
     model.add(conv_base)
     model.add(layers.Flatten())
     model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dropout(rate=0.2))
+    model.add(layers.Dense(4096, activation='relu'))
     model.add(layers.Dense(101, activation='softmax'))
     sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    
+    model.summary()
+    
     model.compile(loss='categorical_crossentropy',
                   optimizer=optimizers.RMSprop(lr=1e-5),
                   metrics=['acc'])
     return model
 
+def get_conv_food101_NASNet():
+    
+    conv_base = NASNetLarge(weights='imagenet',
+                            include_top=False,
+                            input_shape=(150, 150, 3))
+
+    model = models.Sequential()
+    model.add(conv_base)
+    model.add(layers.Flatten())
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dropout(rate=0.2))
+    model.add(layers.Dense(101, activation='softmax'))
+    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=sgd,
+                  metrics=['acc'])
+    return model
+    
 
 
 def get_conv_food11_VGG16():

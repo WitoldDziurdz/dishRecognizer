@@ -4,9 +4,12 @@ from keras.preprocessing.image import ImageDataGenerator
 class DataGenerator:
     def __init__(self, base_dir):
         self.base_dir = base_dir
-        self.train_dir = os.path.join(base_dir, 'training')
-        self.validation_dir = os.path.join(base_dir, 'validation')
-        self.test_dir = os.path.join(base_dir, 'evaluation')
+        #self.train_dir = os.path.join(base_dir, 'training')
+        #self.validation_dir = os.path.join(base_dir, 'validation')
+        #self.test_dir = os.path.join(base_dir, 'evaluation')
+        self.train_dir = os.path.join(base_dir, 'train')
+        self.validation_dir = os.path.join(base_dir, 'test')
+        self.test_dir = os.path.join(base_dir, 'test')
 
         self.train_datagen = ImageDataGenerator(rescale=1. / 255,
                                            rotation_range=30,
