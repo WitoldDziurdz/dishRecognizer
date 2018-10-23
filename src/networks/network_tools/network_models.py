@@ -102,6 +102,25 @@ def get_conv_food101_NASNet():
                   optimizer=sgd,
                   metrics=['acc'])
     return model
+
+def get_empty_VGG16():
+    conv_base = VGG16(weights='imagenet',
+                      include_top=False,
+                      input_shape=(150, 150, 3))
+    
+    for layer in conv_base.layers:
+        layer.trainable = True
+        
+    model = models.Sequential()
+    model.add(conv_base)
+    model.add(layers.Flatten())
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(101, activation='softmax'))
+    
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=optimizers.RMSprop(lr=1e-5),
+                  metrics=['acc'])
+    return model
     
 
 
