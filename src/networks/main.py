@@ -17,8 +17,9 @@ def main():
     #model = m.get_conv_network()
     #model = m.get_conv_VGG16()
     #model = m.get_conv_food11_VGG16()
-    model = m.get_empty_VGG16()
+    #model = m.get_empty_VGG16()
     #model = m.get_conv_food101_NASNet()
+    model = m.get_conv_food101_VGG16()
 
     # log, one log for many network
     #path_log = "C:\\praca_inzynierska\\dishRecognizer\\src\\models\\food101\\log.csv"

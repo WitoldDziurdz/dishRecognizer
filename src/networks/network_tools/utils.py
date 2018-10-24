@@ -38,45 +38,45 @@ class DataGenerator:
         self.test_generator = self.test_datagen.flow_from_directory(
             self.test_dir,
             target_size=(150, 150),
-            batch_size=20,
+            batch_size=32,
             class_mode='binary')
 
     def set_101_food_categorical(self):
         self.train_generator = self.train_datagen.flow_from_directory(
             self.train_dir,
             target_size=(150, 150),
-            batch_size=72,
+            batch_size=32,
             class_mode='categorical')
 
         self.validation_generator = self.test_datagen.flow_from_directory(
             self.validation_dir,
             target_size=(150, 150),
-            batch_size=72,
+            batch_size=32,
             class_mode='categorical')
 
         self.test_generator = self.test_datagen.flow_from_directory(
             self.test_dir,
             target_size=(150, 150),
-            batch_size=72,
+            batch_size=32,
             class_mode='categorical')
 
     def set_11_food_categorical(self):
         self.train_generator = self.train_datagen.flow_from_directory(
             self.train_dir,
             target_size=(150, 150),
-            batch_size=40,
+            batch_size=32,
             class_mode='categorical')
 
         self.validation_generator = self.test_datagen.flow_from_directory(
             self.validation_dir,
             target_size=(150, 150),
-            batch_size=40,
+            batch_size=32,
             class_mode='categorical')
 
         self.test_generator = self.test_datagen.flow_from_directory(
             self.test_dir,
             target_size=(150, 150),
-            batch_size=40,
+            batch_size=32,
             class_mode='categorical')
 
 
