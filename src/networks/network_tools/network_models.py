@@ -1,8 +1,9 @@
 from keras import layers
 from keras import models
 from keras import optimizers
-from keras.applications import VGG16
+from keras.applications import VGG16, InceptionV3
 from keras.applications import NASNetLarge
+from keras.applications import InceptionResNetV2
 from keras.optimizers import SGD
 
 def get_conv_network():
@@ -18,9 +19,37 @@ def get_conv_network():
     model.add(layers.Flatten())
     model.add(layers.Dense(512, activation='relu'))
     model.add(layers.Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer=optimizers.RMSprop(lr=1e-4), metrics=['acc'])
+    model.compile(loss='binary_crossentropy', optimizer=optimizers.RMSprop(lr=0.001), metrics=['acc'])
     return model
 
+def get_conv_network2():
+    model = models.Sequential()
+    model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)))
+    model.add(layers.BatchNormalization(axis=-1))
+    model.add(layers.MaxPooling2D(pool_size=(3, 3)))
+    model.add(layers.Dropout(0.25))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+    model.add(layers.BatchNormalization(axis=-1))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+    model.add(layers.BatchNormalization(axis=-1))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(layers.Dropout(0.25))
+    model.add(layers.Conv2D(128, (3, 3), activation='relu'))
+    model.add(layers.BatchNormalization(axis=-1))
+    model.add(layers.Conv2D(128, (3, 3), activation='relu'))
+    model.add(layers.BatchNormalization(axis=-1))
+    model.add(layers.Dropout(0.25))
+    model.add(layers.Flatten())
+    model.add(layers.Dense(512, activation='relu'))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Dropout(0.5))
+    model.add(layers.Dense(1, activation='sigmoid'))
+    
+    model.compile(loss='binary_crossentropy', optimizer=optimizers.RMSprop(lr=1e-4), metrics=['acc'])
+    
+    return model
+
+# mysle, ze dojdzie do 98 dla food/non-food
 def get_conv_VGG16():
     conv_base = VGG16(weights='imagenet',
                       include_top=False,
@@ -29,7 +58,7 @@ def get_conv_VGG16():
     conv_base.trainable = True
     set_trainable = False
     for layer in conv_base.layers:
-        if layer.name == 'block5_conv1':
+        if layer.name == 'block4_conv1':
             set_trainable = True
         if set_trainable:
             layer.trainable = True
@@ -39,17 +68,39 @@ def get_conv_VGG16():
     model = models.Sequential()
     model.add(conv_base)
     model.add(layers.Flatten())
-    model.add(layers.Dense(256, activation='relu'))
+    model.add(layers.Dense(1024, activation='relu'))
+    model.add(layers.Dropout(rate=0.3))
+    model.add(layers.Dense(1024, activation='relu'))
     model.add(layers.Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',
                   optimizer=optimizers.RMSprop(lr=1e-5),
                   metrics=['acc'])
     return model
 
+# mysle, ze dojdzie do 99 dla food/nonfood
+def get_conv_IRS_V2():
+    conv_base = InceptionResNetV2(weights='imagenet',
+                      include_top=False,
+                      input_shape=(150, 150, 3))
+
+    conv_base.trainable = False
+
+    model = models.Sequential()
+    model.add(conv_base)
+    model.add(layers.Flatten())
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dropout(rate=0.5))
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(101, activation='softmax'))
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=optimizers.RMSprop(lr=1e-4),
+                  metrics=['acc'])
+    return model
+
 def get_conv_food101_VGG16():
     conv_base = VGG16(weights='imagenet',
                       include_top=False,
-                      input_shape=(150, 150, 3))
+                      input_shape=(256, 256, 3))
 
     conv_base.summary()
 
@@ -85,6 +136,30 @@ def get_conv_food101_VGG16():
                   metrics=['acc'])
     return model
 
+
+def get_conv_InceptionV3():
+    conv_base = InceptionV3(weights='imagenet',
+                      include_top=False,
+                      input_shape=(150, 150, 3))
+
+
+    model = models.Sequential()
+    model.add(conv_base)
+    model.add(layers.Flatten())
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dropout(rate=0.2))
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(101, activation='softmax'))
+    sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    
+    
+    model.summary()
+    
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=optimizers.RMSprop(lr=1e-5),
+                  metrics=['acc'])
+    return model
+
 def get_conv_food101_NASNet():
     
     conv_base = NASNetLarge(weights='imagenet',
@@ -102,10 +177,11 @@ def get_conv_food101_NASNet():
                   metrics=['acc'])
     return model
 
+# scores 66
 def get_empty_VGG16():
     conv_base = VGG16(weights='imagenet',
                       include_top=False,
-                      input_shape=(256, 256, 3))
+                      input_shape=(150, 150, 3))
     
     for layer in conv_base.layers:
         layer.trainable = True
@@ -113,15 +189,13 @@ def get_empty_VGG16():
     model = models.Sequential()
     model.add(conv_base)
     model.add(layers.Flatten())
-    model.add(layers.Dense(4096, activation='relu'))
-    model.add(layers.Dense(101, activation='softmax'))
+    model.add(layers.Dense(128, activation='relu'))
+    model.add(layers.Dense(1, activation='softmax'))
     
-    model.compile(loss='categorical_crossentropy',
+    model.compile(loss='binary_crossentropy',
                   optimizer=optimizers.RMSprop(lr=1e-5),
                   metrics=['acc'])
     return model
-    
-
 
 def get_conv_food11_VGG16():
     conv_base = VGG16(weights='imagenet',
