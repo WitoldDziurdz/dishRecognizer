@@ -7,15 +7,18 @@ def main():
     #base_dir = 'C:\data'
     #base_dir = 'C:\\data\\101food'
     base_dir = 'data'
+    
+    input_x = 150
+    input_y = 150
 
     # data generate
-    data = utils.DataGenerator(base_dir)
+    data = utils.DataGenerator(base_dir, input_x, input_y)
     #data.set_food_nonfood_data()
     data.set_101_food_categorical()
 
     # model definition
     #model = m.get_conv_network()
-    model = m.get_conv_IRS_V2()
+    model = m.get_conv_IRS_V2(input_x, input_y)
     #model = m.get_conv_food11_VGG16()
     #model = m.get_empty_VGG16()
     #model = m.get_conv_food101_NASNet()

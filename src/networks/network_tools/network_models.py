@@ -78,10 +78,10 @@ def get_conv_VGG16():
     return model
 
 # mysle, ze dojdzie do 99 dla food/nonfood
-def get_conv_IRS_V2():
+def get_conv_IRS_V2(width, length):
     conv_base = InceptionResNetV2(weights='imagenet',
                       include_top=False,
-                      input_shape=(150, 150, 3))
+                      input_shape=(width, length, 3))
 
     conv_base.trainable = False
 

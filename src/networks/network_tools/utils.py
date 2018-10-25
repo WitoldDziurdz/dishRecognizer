@@ -2,8 +2,10 @@ import matplotlib.pyplot as plt
 import os
 from keras.preprocessing.image import ImageDataGenerator
 class DataGenerator:
-    def __init__(self, base_dir):
+    def __init__(self, base_dir, width, length):
         self.base_dir = base_dir
+        self.width = width
+        self.length = length
         #self.train_dir = os.path.join(base_dir, 'training')
         #self.validation_dir = os.path.join(base_dir, 'validation')
         #self.test_dir = os.path.join(base_dir, 'evaluation')
@@ -25,57 +27,57 @@ class DataGenerator:
 
         self.train_generator = self.train_datagen.flow_from_directory(
             self.train_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='binary')
 
         self.validation_generator = self.test_datagen.flow_from_directory(
             self.validation_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='binary')
 
         self.test_generator = self.test_datagen.flow_from_directory(
             self.test_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='binary')
 
     def set_101_food_categorical(self):
         self.train_generator = self.train_datagen.flow_from_directory(
             self.train_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='categorical')
 
         self.validation_generator = self.test_datagen.flow_from_directory(
             self.validation_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='categorical')
 
         self.test_generator = self.test_datagen.flow_from_directory(
             self.test_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='categorical')
 
     def set_11_food_categorical(self):
         self.train_generator = self.train_datagen.flow_from_directory(
             self.train_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='categorical')
 
         self.validation_generator = self.test_datagen.flow_from_directory(
             self.validation_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='categorical')
 
         self.test_generator = self.test_datagen.flow_from_directory(
             self.test_dir,
-            target_size=(150, 150),
+            target_size=(self.width, self.length),
             batch_size=32,
             class_mode='categorical')
 
