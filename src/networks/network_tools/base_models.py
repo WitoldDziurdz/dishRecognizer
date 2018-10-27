@@ -102,7 +102,7 @@ def get_NASNetLarge(include_weights=True, do_include_top=True):
     weights_s='imagenet'
     if include_weights==False:
         weights_s=None
-        
+    
     return NASNetLarge(weights=weights_s,
                       include_top=do_include_top,
                       input_shape=(settings.input_x, settings.input_y, 3))

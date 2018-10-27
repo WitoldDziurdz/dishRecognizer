@@ -25,7 +25,8 @@ def main():
 
     # model definition
     #model = m.get_conv_network()
-    model = m.get_conv_IRS_V2(settings.input_x, settings.input_y)
+    #model = m.get_conv_IRS_V2()
+    model = m.get_full_NASNetLarge()
     #model = m.get_conv_network()
     #model = m.get_conv_food11_VGG16()
     #model = m.get_empty_VGG16()

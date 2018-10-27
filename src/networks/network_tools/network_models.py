@@ -3,8 +3,10 @@ from keras import models
 import network_tools.utils
 from keras import optimizers
 from keras.optimizers import SGD
+from keras.regularizers import l2
 
 import network_tools.base_models as bm
+import network_tools.settings as settings
 
 def get_conv_network():
     model = models.Sequential()
@@ -81,7 +83,7 @@ def get_conv_VGG16():
     return model
 
 # mysle, ze dojdzie do 99 dla food/nonfood
-def get_conv_IRS_V2(width, length):
+def get_conv_IRS_V2():
     #conv_base = InceptionResNetV2(weights='imagenet',
     #                  include_top=False,
     #                  input_shape=(width, length, 3))
@@ -171,7 +173,7 @@ def get_conv_food101_NASNet():
     #                        include_top=False,
     #                        input_shape=(32, 32, 3))
 
-    conv_base = bm.get_NASNetLarge(include_weights=True, do_include_top=False)
+    conv_base = bm.get_NASNetLarge(include_weights=True, do_include_top=True)
 
     model = models.Sequential()
     model.add(conv_base)
@@ -182,6 +184,19 @@ def get_conv_food101_NASNet():
     model.compile(loss='categorical_crossentropy',
                   optimizer=sgd,
                   metrics=['acc'])
+    return model
+
+def get_full_NASNetLarge():
+    base_model = bm.get_NASNetLarge(include_weights=True, do_include_top=False)
+    model = models.Sequential()
+    model.add(base_model)
+    model.add(layers.AveragePooling2D(pool_size=(8,8)))
+    model.add(layers.Dropout(rate=0.4))
+    model.add(layers.Flatten())
+    model.add(layers.Dense(settings.n_classes, init='glorot_uniform', W_regularizer=l2(.0005), activation='softmax'))
+    opt = SGD(lr=.01, momentum=.9)
+    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+    
     return model
 
 # scores 66
