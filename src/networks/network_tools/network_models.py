@@ -199,9 +199,20 @@ def get_full_NASNetLarge():
     
     return model
 
+def get_full_inceptionv3():
+    base_model = bm.get_InceptionV3(include_weights=True, do_include_top=False)
+    model = models.Sequential()
+    model.add(base_model)
+    model.add(layers.AveragePooling2D(pool_size=(8,8)))
+    model.add(layers.Dropout(rate=0.4))
+    model.add(layers.Flatten())
+    model.add(layers.Dense(settings.n_classes, init='glorot_uniform', W_regularizer=l2(.0005), activation='softmax'))
+    opt = SGD(lr=.01, momentum=.9)
+    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+
 # scores 66
 def get_empty_VGG16():
-    conv_base = bm.get_VGG16(include_weights=True, do_include_top=False)
+    conv_base = bm.get_InceptionV3(include_weights=True, do_include_top=False)
         
     model = models.Sequential()
     model.add(conv_base)
