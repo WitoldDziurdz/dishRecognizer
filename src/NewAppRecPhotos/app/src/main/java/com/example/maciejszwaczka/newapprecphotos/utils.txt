@@ -1,0 +1,1 @@
+http://40.89.133.248:8080/v1/models/dishrecognizer:predict
