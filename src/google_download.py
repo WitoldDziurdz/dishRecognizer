@@ -11,7 +11,7 @@ request = service.cse().list(
     q='enter search phrase here',
     cx='015941098266592620936:divui1smer0',
     searchType='image',
-    num=3,pyt
+    num=3,
     safe= 'off'
 )
 response = request.execute()
