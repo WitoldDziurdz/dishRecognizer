@@ -5,6 +5,7 @@ from keras.layers import Flatten
 from keras.layers import Dense, Dropout
 import keras
 
+
 from keras.preprocessing.image import ImageDataGenerator
 
 model = Sequential()
