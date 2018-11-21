@@ -8,8 +8,8 @@ import network_tools.settings as settings
 def main():
     # directories
     #base_dir = 'C:\data'
-    #base_dir = 'C:\\data\\101food'
-    base_dir = 'data'
+    base_dir = 'C:\\data\\101food'
+    #base_dir = 'data'
     network_name = 'tmp_name'
     model_path = 'models/' + network_name + '/'
     

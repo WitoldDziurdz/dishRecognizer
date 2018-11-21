@@ -5,10 +5,7 @@ def create_dir(dir):
     if not os.path.exists(dir):
         os.mkdir(dir)
 
-def main():
-    original_dataset_dir = 'C:\\food-101\\images'
-
-    base_dir = 'C:\\data\\101food'
+def main(original_dataset_dir, base_dir):
     create_dir(base_dir)
     train_dir = os.path.join(base_dir, 'training')
     create_dir(train_dir)
@@ -61,4 +58,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    print("Skrypt do podziału zbioru danych na zbiory do uczenia, walidacji i testów")
+    original_dataset_dir = str(input("Wpisz ścieżkę do zbioru który ma być podzielony (original_dataset_dir): "))
+    base_dir = str(input("Wpisz ścieżkę do folderu, w którym ma być zapisany podzielony zbiór 'original_dataset_dir': "))
+    main(original_dataset_dir, base_dir)
