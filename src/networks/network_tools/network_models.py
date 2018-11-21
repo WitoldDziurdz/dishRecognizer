@@ -190,7 +190,7 @@ def get_full_NASNetLarge():
     base_model = bm.get_NASNetLarge(include_weights=True, do_include_top=False)
     model = models.Sequential()
     model.add(base_model)
-    model.add(layers.AveragePooling2D(pool_size=(8,8)))
+    model.add(layers.GlobalAveragePooling2D())
     model.add(layers.Dropout(rate=0.4))
     model.add(layers.Flatten())
     model.add(layers.Dense(settings.n_classes, init='glorot_uniform', W_regularizer=l2(.0005), activation='softmax'))
