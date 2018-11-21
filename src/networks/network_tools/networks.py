@@ -14,8 +14,8 @@ class Network:
 
 
 class NetworkVGG16(Network):
-    def __init__(self, input_x, input_y):
-        Network.__init__(self, input_x, input_y)
+    def __init__(self, input_x, input_y, n_classes):
+        Network.__init__(self, input_x, input_y, n_classes)
         self.weights = 'imagenet'
         self.include_top = False
         self.conv_base = VGG16(weights=self.weights, include_top=self.include_top, input_shape=self.input_shape)

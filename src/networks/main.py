@@ -21,7 +21,7 @@ def main():
 
     # data generate
     data = DataGenerator(base_dir, settings.input_x, settings.input_y)
-    model = NetworkVGG16(settings.input_x, settings.input_y).create_model()
+    model = NetworkVGG16(settings.input_x, settings.input_y, settings.n_classes).create_model()
     Architecture(model).log(model_path)
 
     csv_logger = CSVLogger(path_log, append=True, separator=';')
