@@ -29,11 +29,11 @@ def main():
 
     history = model.fit_generator(
          data.train_generator,
-         steps_per_epoch=3000,
-         epochs=50,
+         steps_per_epoch=2000,
+         epochs=40,
          callbacks=[csv_logger, checkpointer],
          validation_data=data.validation_generator,
-         validation_steps=250, workers=16)
+         validation_steps=100, workers=16)
 
     test_loss, test_acc = model.evaluate_generator(data.test_generator, steps=600)
     print('test acc:', test_acc)
