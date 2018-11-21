@@ -7,7 +7,6 @@ from keras.optimizers import SGD
 from keras.regularizers import l2
 import network_tools.base_models as bm
 import network_tools.settings as settings
-from keras.applications import VGG16
 
 def get_conv_IRS_V2():
     #conv_base = InceptionResNetV2(weights='imagenet',
@@ -97,32 +96,3 @@ def get_full_inceptionv3():
     model.add(layers.Dense(settings.n_classes, init='glorot_uniform', W_regularizer=l2(.0005), activation='softmax'))
     opt = SGD(lr=.01, momentum=.9)
     model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
-
-def get_conv_food101_VGG16():
-    conv_base = VGG16(weights='imagenet',
-                      include_top=False,
-                      input_shape=(150, 150, 3))
-
-    conv_base.trainable = True
-    set_trainable = False
-    for layer in conv_base.layers:
-        if layer.name == 'block4_conv1':
-            set_trainable = True
-        if set_trainable:
-            layer.trainable = True
-        else:
-            layer.trainable = False
-
-    model = models.Sequential()
-    model.add(conv_base)
-    model.add(layers.Flatten())
-    model.add(layers.Dense(4096, activation='relu'))
-    model.add(layers.Dense(101, activation='softmax'))
-    model.compile(loss='categorical_crossentropy',
-                  optimizer=optimizers.RMSprop(lr=1e-5),
-                  metrics=['acc'])
-    return model
-
-
-if __name__ == "__main__":
-    get_conv_food101_VGG16().summary()
