@@ -1,27 +1,24 @@
 from network_tools import utils as u
 from keras.callbacks import CSVLogger, ModelCheckpoint
 from network_tools.data import DataGenerator
-from network_tools.networks import NetworkVGG16
+from network_tools.networks import NetworkVGG16, NetworkXception
 from network_tools.architecture import Architecture
 import network_tools.settings as settings
 
 def main():
     # directories
-    #base_dir = 'C:\data'
     base_dir = 'C:\\data\\101food'
     #base_dir = 'data'
     network_name = 'tmp_name'
     model_path = 'models/' + network_name + '/'
-    # path_log = "C:\\praca_inzynierska\\dishRecognizer\\src\\models\\food101\\log.csv"
     path_log = model_path + "log.csv"
-    # path_name = "C:\\praca_inzynierska\\dishRecognizer\\src\\models\\food101\\network_food11"
     path_name = "."
 
     u.create_dir(model_path)
 
     # data generate
     data = DataGenerator(base_dir, settings.input_x, settings.input_y)
-    model = NetworkVGG16(settings.input_x, settings.input_y, settings.n_classes).create_model()
+    model = NetworkXception(settings.input_x, settings.input_y, settings.n_classes).create_model()
     Architecture(model).log(model_path)
 
     csv_logger = CSVLogger(path_log, append=True, separator=';')
