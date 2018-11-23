@@ -1,0 +1,16 @@
+1. Podajemy parametry po³¹czenia ssh w:
+winscp:
+-host: 40.89.133.248
+-port: 22
+-login: guest
+-has³o: guest
+
+putty:
+-host:guest@40.89.133.248 
+-port:22
+-has³o: guest
+2. W winscp podmieniamy model sieci, który jest w folderze /home/mszwaczka/servingInstance/dishrecognizer
+3. W katalogu servinginstance wywo³ujemy komendê docker-compose up -d
+
+
+
