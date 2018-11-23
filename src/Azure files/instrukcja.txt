@@ -6,7 +6,7 @@ winscp:
 -has³o: guest
 
 putty:
--host:mszwaczka@40.89.133.248 
+-host:guest@40.89.133.248 
 -port:22
 -has³o: guest
 2. W winscp podmieniamy model sieci, który jest w folderze /home/mszwaczka/servingInstance/dishrecognizer
