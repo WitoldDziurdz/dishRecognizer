@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  serving:
+    container_name: tensorflow_serving
+    image: tensorflow/serving
+    volumes:
+      - ./models/dishrecognizer:/models/dishrecognizer
+    ports:
+      - "8080:8501"
+      - "8081:8500"
+    environment:
+      - MODEL_NAME=dishrecognizer
+
