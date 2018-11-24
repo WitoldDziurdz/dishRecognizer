@@ -48,4 +48,7 @@ class DataGenerator:
     def test_data(self):
         return self.test_generator
 
+    def batch_size(self):
+        return self.batch_size
+
 

@@ -1,4 +1,4 @@
-input_x = 150
-input_y = 150
+input_x = 256
+input_y = 256
 
-n_classes = 101
+n_classes = 121

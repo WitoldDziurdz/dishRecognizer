@@ -17,7 +17,7 @@ def schedule(epoch):
 def main():
     # directories
     #base_dir = 'C:\\data\\101food'
-    base_dir = 'data'
+    base_dir = 'data121'
     network_name = 'tmp_name'
     model_path = 'models/' + network_name + '/'
     path_log = model_path + "log.csv"
@@ -36,11 +36,11 @@ def main():
 
     history = model.fit_generator(
          data.train_generator,
-         steps_per_epoch=2000,
-         epochs=40,
+         steps_per_epoch=700*settings.n_classes // data.batch_size,
+         epochs=10,
          callbacks=[lr_scheduler, csv_logger, checkpointer],
          validation_data=data.validation_generator,
-         validation_steps=100, workers=16)
+         validation_steps=150*settings.n_classes // data.batch_size, workers=16)
 
     test_loss, test_acc = model.evaluate_generator(data.test_generator, steps=600)
     print('test acc:', test_acc)
