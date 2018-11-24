@@ -27,7 +27,7 @@ def main():
 
     # data generate
     data = DataGenerator(base_dir, settings.input_x, settings.input_y)
-    model = NetworkVGGFromScratch(settings.input_x, settings.input_y, settings.n_classes).create_model()
+    model = NetworkXception(settings.input_x, settings.input_y, settings.n_classes).create_model()
     Architecture(model).log(model_path)
 
     csv_logger = CSVLogger(path_log, append=True, separator=';')

@@ -53,17 +53,9 @@ class NetworkXception(Network):
 
     def create_model(self):
         self.conv_base.trainable = True
-        set_trainable = False
-        for layer in self.conv_base.layers:
-            if layer.name == 'block2_sepconv1':
-                set_trainable = True
-            if set_trainable:
-                layer.trainable = True
-            else:
-                layer.trainable = False
-
         self.model.add(self.conv_base)
         self.model.add(layers.GlobalAveragePooling2D())
+        self.model.add(layers.Dense(1024, activation='relu'))
         self.model.add(layers.Dense(self.n_classes, activation='softmax'))
         self.model.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
         return self.model
