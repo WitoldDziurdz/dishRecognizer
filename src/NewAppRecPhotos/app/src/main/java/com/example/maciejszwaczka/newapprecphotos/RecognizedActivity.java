@@ -18,24 +18,17 @@ import java.io.InputStream;
 
 public class RecognizedActivity extends AppCompatActivity {
 
-    public int width;
+    private ImageView view;
 
-    public int height;
+    private Bitmap bitmap;
 
-    public ConstraintLayout layout;
-
-    public ImageView view;
-
-    public Bitmap bitmap;
-
-    public ImageClassifier classifier;
+    private ImageClassifier classifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognized);
         Intent intent = getIntent();
-        layout= findViewById(R.id.reclayout);
         try {
             classifier = new ImageClassifier(this);
         } catch (IOException e) {
@@ -43,7 +36,6 @@ public class RecognizedActivity extends AppCompatActivity {
         }
         String locOfBitmap = intent.getExtras().get("bitmapLoc").toString();
         InputStream inputStream = null;
-
         try {
             inputStream = getContentResolver().openInputStream(Uri.fromFile(new File(locOfBitmap)));
         } catch (FileNotFoundException e) {

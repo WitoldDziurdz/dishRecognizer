@@ -1,18 +1,3 @@
-/* Copyright 2017 The TensorFlow Authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-==============================================================================*/
-
 package com.example.maciejszwaczka.newapprecphotos;
 
 import android.app.Activity;
@@ -60,17 +45,18 @@ public class ImageClassifier {
     public String classifyPhoto(Bitmap bitmap) throws Exception {
 
         float[][][][] data=convertBitmapToByteBuffer(bitmap);
-        Request req=new Request();
-        Inputs input=new Inputs();
-        input.input_image=data;
-        req.inputs=input;
+        Request req=new Request(new Inputs(data));
         Gson gson = new Gson();
-        System.out.println(gson.toJson(req));
         HttpResponse<String> jsonResponse = Unirest.post("http://40.89.133.248:8080/v1/models/dishrecognizer:predict")
                 .header("accept", "application/json")
                 .body(gson.toJson(req)).asString();
         Results results=gson.fromJson(jsonResponse.getBody(),Results.class);
-        return labelList.get(results.outputs.get(0).indexOf(Collections.max(results.outputs.get(0))));
+        if(Collections.max(results.getOutputs().get(0))>0.4f) {
+            return labelList.get(results.getOutputs().get(0).indexOf(Collections.max(results.getOutputs().get(0))));
+        }
+        else{
+            return "Not recognized";
+        }
     }
 
     private float[][][][] convertBitmapToByteBuffer(Bitmap bitmap) {

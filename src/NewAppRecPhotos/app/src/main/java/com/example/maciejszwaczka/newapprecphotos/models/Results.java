@@ -3,5 +3,10 @@ package com.example.maciejszwaczka.newapprecphotos.models;
 import java.util.List;
 
 public class Results {
-    public List<List<Float>> outputs;
+    private List<List<Float>> outputs;
+
+    public List<List<Float>> getOutputs()
+    {
+        return outputs;
+    }
 }

@@ -35,27 +35,6 @@ public class RecognizingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognizing);
-        takePictureButton = findViewById(R.id.take_picture_button);
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    if (photoFile != null) {
-                        Uri photoURI = FileProvider.getUriForFile(context,
-                                "com.example.android.fileprovider",
-                                photoFile);
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
-                    }
-                }
-        }});
         selectPictureButton = findViewById(R.id.select_picture);
         selectPictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +47,7 @@ public class RecognizingActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"),PICK_IMAGE);
             }
         });
+        takePictureButton = findViewById(R.id.take_picture_button);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,9 +86,8 @@ public class RecognizingActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_TAKE_PICTURE) {
             if (resultCode == RESULT_OK) {
-                File file = new File(mCurrentPhotoPath);
                 Intent recognizedIntent= new Intent(context, RecognizedActivity.class);
-                recognizedIntent.putExtra("bitmapLoc", Uri.fromFile(file).getEncodedPath());
+                recognizedIntent.putExtra("bitmapLoc", mCurrentPhotoPath);
                 startActivity(recognizedIntent);
             }
         }
