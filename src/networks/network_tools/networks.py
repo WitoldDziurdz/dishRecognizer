@@ -70,7 +70,6 @@ class NetworkXception(Network):
         self.__conv_base.trainable = True
         self._model.add(self.__conv_base)
         self._model.add(layers.GlobalAveragePooling2D())
-        self._model.add(layers.Dense(1024, activation='relu'))
         self._model.add(layers.Dense(self._n_classes, activation='softmax'))
         self._model.compile(loss=self.__loss, optimizer=self.__optimizer, metrics=self.__metrics)
         return self._model
