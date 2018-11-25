@@ -37,6 +37,6 @@ class Util:
     @staticmethod
     def create_dir(path):
         if not os.path.exists(path):
-            os.makedirs(path, exist_ok=True)
+            os.makedirs(path)
         else:
             print("directory already exists")
