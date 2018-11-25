@@ -3,18 +3,19 @@ from keras import models
 from keras import optimizers
 from keras.applications import VGG16, Xception
 
+
 class Network:
-    def __init__(self, input_x, input_y, n_classes):
-        self.input_x = input_x
-        self.input_y = input_y
-        self.input_z = 3
-        self.n_classes = n_classes
+    def __init__(self, setting):
+        self.input_x = setting.input_x
+        self.input_y = setting.input_y
+        self.input_z = setting.input_z
+        self.n_classes = setting.n_classes
         self.input_shape = (self.input_x, self.input_y, self.input_z)
 
 
 class NetworkVGG16(Network):
-    def __init__(self, input_x, input_y, n_classes):
-        Network.__init__(self, input_x, input_y, n_classes)
+    def __init__(self, setting):
+        Network.__init__(self, setting)
         self.weights = 'imagenet'
         self.include_top = False
         self.conv_base = VGG16(weights=self.weights, include_top=self.include_top, input_shape=self.input_shape)
@@ -40,9 +41,10 @@ class NetworkVGG16(Network):
         self.model.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
         return self.model
 
+
 class NetworkXception(Network):
-    def __init__(self, input_x, input_y, n_classes):
-        Network.__init__(self, input_x, input_y, n_classes)
+    def __init__(self, setting):
+        Network.__init__(self, setting)
         self.weights = 'imagenet'
         self.include_top = False
         self.conv_base = Xception(weights=self.weights, include_top=self.include_top, input_shape=self.input_shape)
@@ -60,9 +62,10 @@ class NetworkXception(Network):
         self.model.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
         return self.model
 
+
 class NetworkVGGFromScratch(Network):
-    def __init__(self, input_x, input_y, n_classes):
-        Network.__init__(self, input_x, input_y, n_classes)
+    def __init__(self, setting):
+        Network.__init__(self, setting)
         self.weights = None
         self.include_top = False
         self.conv_base = VGG16(weights=self.weights, include_top=self.include_top, input_shape=self.input_shape)

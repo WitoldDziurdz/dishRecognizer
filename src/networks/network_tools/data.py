@@ -1,11 +1,12 @@
 import os
 from keras.preprocessing.image import ImageDataGenerator
 
+
 class DataGenerator:
-    def __init__(self, base_dir, input_x, input_y):
+    def __init__(self, base_dir, setting):
         self.base_dir = base_dir
-        self.input_x = input_x
-        self.input_y = input_y
+        self.input_x = setting.input_x
+        self.input_y = setting.input_y
         self.train_dir = os.path.join(base_dir, 'training')
         self.validation_dir = os.path.join(base_dir, 'validation')
         self.test_dir = os.path.join(base_dir, 'evaluation')
