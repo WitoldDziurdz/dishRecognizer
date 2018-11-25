@@ -44,7 +44,7 @@ public class RecognizingActivity extends AppCompatActivity {
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),PICK_IMAGE);
+                startActivityForResult(intent,PICK_IMAGE);
             }
         });
         takePictureButton = findViewById(R.id.take_picture_button);
@@ -56,15 +56,13 @@ public class RecognizingActivity extends AppCompatActivity {
                     File photoFile = null;
                     try {
                         photoFile = createImageFile();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (photoFile != null) {
                         Uri photoURI = FileProvider.getUriForFile(context,
                                 "com.example.android.fileprovider",
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
