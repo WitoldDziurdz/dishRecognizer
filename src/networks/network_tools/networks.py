@@ -63,7 +63,7 @@ class NetworkXception(Network):
         self.__include_top = False
         self.__conv_base = Xception(weights=self.__weights, include_top=self.__include_top, input_shape=self._input_shape)
         self.__loss = 'categorical_crossentropy'
-        self.__optimizer = optimizers.SGD(lr=.01, momentum=.9)
+        self.__optimizer = optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0)
         self.__metrics = ['acc']
 
     def create_model(self):

@@ -9,7 +9,7 @@ class Teacher:
     def __init__(self):
         # self.__base_dir = 'C:\\data\\101food'
         self.__base_dir = 'data121'
-        self.__network_name = 'xception_witek'
+        self.__network_name = 'xception_witek_adagrad'
         self.__model_path = 'models/' + self.__network_name + '/'
         self.__path_log = self.__model_path + "log.csv"
         self.__path_name = "."
