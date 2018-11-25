@@ -17,11 +17,11 @@ class Network:
     def fit(self, epochs, callbacks):
         history = self.model.fit_generator(
             self.data.train_generator,
-            steps_per_epoch=5 * self.n_classes // self.data.batch_size,
+            steps_per_epoch=700 * self.n_classes // self.data.batch_size,
             epochs=epochs,
             callbacks=callbacks,
             validation_data=self.data.validation_generator,
-            validation_steps=5 * self.n_classes // self.data.batch_size, workers=16)
+            validation_steps=150 * self.n_classes // self.data.batch_size, workers=16)
         return history
 
     def evaluate(self, steps):
