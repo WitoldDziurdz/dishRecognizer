@@ -8,7 +8,7 @@ class Architecture:
     def __init__(self, model, path):
         self.model = model
         self.full_config = model.get_config()
-        self.layers_list = self.list_layers()
+        self.layers_list = self.__list_layers()
         self.opt_config = model.optimizer.get_config()
         self.path = path
 
@@ -25,7 +25,7 @@ class Architecture:
         f.write(str(self.opt_config))
         f.close()
 
-    def list_layers(self):
+    def __list_layers(self):
         layers_list = []
         for layer in self.model.layers:
             if any(layer.name in s for s in self.base_model_names):
