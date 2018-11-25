@@ -3,7 +3,6 @@ import os
 
 
 class Util:
-
     def visualization_loss_and_accuracy(self, history):
         acc = history.history['acc']
         val_acc = history.history['val_acc']
@@ -31,18 +30,6 @@ class Util:
         model.save_weights(file_name + ".h5")
         print("Saved model to disk")
         pass
-
-    def list_layers(self, model):
-        layers_list = []
-        base_model_names = ['densenet', 'densenet121', 'densenet169', 'densenet201', 'inception_resnet_v2', 'inception_v3',
-                            'NASNet', 'resnet50', 'vgg16', 'vgg19', 'xception', ]
-        for layer in model.layers:
-            if any(layer.name in s for s in base_model_names):
-                for l in layer.layers:
-                    layers_list.append(l.name + ' - ' +  'trainable: ' + str(l.trainable))
-            else:
-                layers_list.append(layer.name + ' - ' + 'trainable: ' + str(layer.trainable))
-        model.layers_list = layers_list
 
     def create_dir(self, path):
         if not os.path.exists(path):

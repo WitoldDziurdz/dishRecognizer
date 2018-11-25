@@ -5,17 +5,32 @@ from keras.applications import VGG16, Xception
 
 
 class Network:
-    def __init__(self, setting):
+    def __init__(self, setting, data):
         self.input_x = setting.input_x
         self.input_y = setting.input_y
         self.input_z = setting.input_z
         self.n_classes = setting.n_classes
         self.input_shape = (self.input_x, self.input_y, self.input_z)
+        self.model = models.Sequential()
+        self.data = data
+
+    def fit(self, epochs, callbacks):
+        history = self.model.fit_generator(
+            self.data.train_generator,
+            steps_per_epoch=5 * self.n_classes // self.data.batch_size,
+            epochs=epochs,
+            callbacks=callbacks,
+            validation_data=self.data.validation_generator,
+            validation_steps=5 * self.n_classes // self.data.batch_size, workers=16)
+        return history
+
+    def evaluate(self, steps):
+        return self.model.evaluate_generator(self.data.test_generator, steps)
 
 
 class NetworkVGG16(Network):
-    def __init__(self, setting):
-        Network.__init__(self, setting)
+    def __init__(self, setting, data):
+        Network.__init__(self, setting, data)
         self.weights = 'imagenet'
         self.include_top = False
         self.conv_base = VGG16(weights=self.weights, include_top=self.include_top, input_shape=self.input_shape)
@@ -43,8 +58,8 @@ class NetworkVGG16(Network):
 
 
 class NetworkXception(Network):
-    def __init__(self, setting):
-        Network.__init__(self, setting)
+    def __init__(self, setting, data):
+        Network.__init__(self, setting, data)
         self.weights = 'imagenet'
         self.include_top = False
         self.conv_base = Xception(weights=self.weights, include_top=self.include_top, input_shape=self.input_shape)
@@ -64,8 +79,8 @@ class NetworkXception(Network):
 
 
 class NetworkVGGFromScratch(Network):
-    def __init__(self, setting):
-        Network.__init__(self, setting)
+    def __init__(self, setting, data):
+        Network.__init__(self, setting, data)
         self.weights = None
         self.include_top = False
         self.conv_base = VGG16(weights=self.weights, include_top=self.include_top, input_shape=self.input_shape)
