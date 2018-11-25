@@ -7,9 +7,9 @@ from network_tools.settings import Setting
 
 class Teacher:
     def __init__(self):
-        self.__base_dir = 'C:\\data\\101food'
-        # self.base_dir = 'data121'
-        self.__network_name = 'tmp_name'
+        # self.__base_dir = 'C:\\data\\101food'
+        self.__base_dir = 'data121'
+        self.__network_name = 'xception_witek'
         self.__model_path = 'models/' + self.__network_name + '/'
         self.__path_log = self.__model_path + "log.csv"
         self.__path_name = "."
@@ -50,7 +50,7 @@ class Teacher:
         callbacks = self.__get_callbacks()
 
         # train and validation
-        history = network.fit(epochs=10, callbacks=callbacks)
+        history = network.fit(epochs=15, callbacks=callbacks)
 
         # test
         test_loss, test_acc = network.evaluate(steps=600)
