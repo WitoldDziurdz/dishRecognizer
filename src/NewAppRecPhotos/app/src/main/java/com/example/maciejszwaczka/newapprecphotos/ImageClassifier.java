@@ -51,7 +51,7 @@ public class ImageClassifier {
                 .header("accept", "application/json")
                 .body(gson.toJson(req)).asString();
         Results results=gson.fromJson(jsonResponse.getBody(),Results.class);
-        if(Collections.max(results.getOutputs().get(0))>0.4f) {
+        if(Collections.max(results.getOutputs().get(0))>0.2f) {
             return labelList.get(results.getOutputs().get(0).indexOf(Collections.max(results.getOutputs().get(0))));
         }
         else{
