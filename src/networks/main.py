@@ -5,7 +5,7 @@ from network_tools.networks import NetworkVGG16, NetworkXception, NetworkVGGFrom
 from network_tools.architecture import Architecture
 from network_tools.settings import Setting
 
-class Main:
+class Teacher:
     def __init__(self):
         self.base_dir = 'C:\\data\\101food'
         # self.base_dir = 'data121'
@@ -35,6 +35,7 @@ class Main:
 
         # create settings
         setting = Setting()
+
         # data generate
         data = DataGenerator(self.base_dir, setting)
 
@@ -50,9 +51,10 @@ class Main:
         callbacks = self.get_callbacks()
 
         # train and validation
-        history = network.fit(epochs=1, callbacks=callbacks)
+        history = network.fit(epochs=10, callbacks=callbacks)
+
         # test
-        test_loss, test_acc = network.evaluate(steps=1)
+        test_loss, test_acc = network.evaluate(steps=600)
         print('test acc:', test_acc)
 
         # save model, please check file name
@@ -63,5 +65,5 @@ class Main:
 
 
 if __name__ == "__main__":
-    main = Main()
-    main.start()
+    teacher = Teacher()
+    teacher.start()
