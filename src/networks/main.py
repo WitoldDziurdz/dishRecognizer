@@ -30,8 +30,7 @@ class Teacher:
 
     def start(self):
         # create util
-        util = Util()
-        util.create_dir(self.__model_path)
+        Util.create_dir(self.__model_path)
 
         # create settings
         setting = Setting()
@@ -58,10 +57,10 @@ class Teacher:
         print('test acc:', test_acc)
 
         # save model, please check file name
-        util.save_model(model, self.__path_name, test_acc)
+        Util.save_model(model, self.__path_name, test_acc)
 
         # loss and accuracy visualization
-        util.visualization_loss_and_accuracy(history=history)
+        Util.visualization_loss_and_accuracy(history=history)
 
 
 if __name__ == "__main__":

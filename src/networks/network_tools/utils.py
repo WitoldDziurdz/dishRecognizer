@@ -3,7 +3,9 @@ import os
 
 
 class Util:
-    def visualization_loss_and_accuracy(self, history):
+
+    @staticmethod
+    def visualization_loss_and_accuracy(history):
         acc = history.history['acc']
         val_acc = history.history['val_acc']
         loss = history.history['loss']
@@ -21,7 +23,8 @@ class Util:
         plt.show()
         pass
 
-    def save_model(self, model, path_name, test_acc):
+    @staticmethod
+    def save_model(model, path_name, test_acc):
         model_json = model.to_json()
         file_name = path_name + "_" + str(test_acc);
         with open(file_name + ".json", "w") as json_file:
@@ -31,7 +34,8 @@ class Util:
         print("Saved model to disk")
         pass
 
-    def create_dir(self, path):
+    @staticmethod
+    def create_dir(path):
         if not os.path.exists(path):
             os.makedirs(path, exist_ok=True)
         else:
