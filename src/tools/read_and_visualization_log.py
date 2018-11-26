@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import csv
 
 def visualization_loss_and_accuracy(history):
-
     acc = history['acc']
     val_acc = history['val_acc']
     loss = history['loss']
@@ -44,5 +43,4 @@ def main(path_name):
 
 if __name__ == "__main__":
     path_name = "C:\\xception_witek\\log.csv"
-    dict = main(path_name)
-    print(dict)
+    main(path_name)
