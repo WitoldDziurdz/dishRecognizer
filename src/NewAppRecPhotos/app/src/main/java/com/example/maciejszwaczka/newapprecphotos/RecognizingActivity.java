@@ -1,6 +1,9 @@
 package com.example.maciejszwaczka.newapprecphotos;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -31,6 +34,10 @@ public class RecognizingActivity extends AppCompatActivity {
 
     private Button selectPictureButton;
 
+    private static final int FILES_PERMISSIONS_GRANTED=1;
+
+    private static final int CAMERA_PERMISSIONS_GRANTED=2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,18 +46,35 @@ public class RecognizingActivity extends AppCompatActivity {
         selectPictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                startActivityForResult(intent,PICK_IMAGE);
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},FILES_PERMISSIONS_GRANTED);
+                }
+                else {
+                    onRequestPermissionsResult(FILES_PERMISSIONS_GRANTED, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, new int[]{PackageManager.PERMISSION_GRANTED});
+                }
             }
         });
         takePictureButton = findViewById(R.id.take_picture_button);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},CAMERA_PERMISSIONS_GRANTED);
+                }
+               else {
+                    onRequestPermissionsResult(CAMERA_PERMISSIONS_GRANTED, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, new int[]{PackageManager.PERMISSION_GRANTED,PackageManager.PERMISSION_GRANTED, PackageManager.PERMISSION_GRANTED});
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case CAMERA_PERMISSIONS_GRANTED:
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     File photoFile = null;
@@ -65,8 +89,16 @@ public class RecognizingActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }
-        });
+                break;
+            case FILES_PERMISSIONS_GRANTED:
+                Intent intent;
+                intent = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                startActivityForResult(intent,PICK_IMAGE);
+                break;
+        }
     }
 
     private File createImageFile() throws IOException {
