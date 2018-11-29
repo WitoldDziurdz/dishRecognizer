@@ -8,7 +8,7 @@ from network_tools.settings import Setting
 class Teacher:
     def __init__(self):
         # self.__base_dir = 'C:\\data\\101food'
-        self.__base_dir = 'data121'
+        self.__base_dir = 'data'
         self.__network_name = 'xception_witek_adagrad'
         self.__model_path = 'models/' + self.__network_name + '/'
         self.__path_log = self.__model_path + "log.csv"
@@ -58,7 +58,7 @@ class Teacher:
         callbacks = self.__get_callbacks()
 
         # train and validation
-        history = network.fit(epochs=15, callbacks=callbacks)
+        history = network.fit(epochs=20, callbacks=callbacks)
 
         # test
         test_loss, test_acc = network.evaluate(steps=600)
@@ -68,7 +68,7 @@ class Teacher:
         Util.save_model(model, self.__path_name, test_acc)
 
         # loss and accuracy visualization
-        Util.visualization_loss_and_accuracy(history=history)
+        Util.visualization_loss_and_accuracy(history=history, model_path=self.__model_path)
 
 
 if __name__ == "__main__":
