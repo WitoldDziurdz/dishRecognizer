@@ -22,6 +22,14 @@ class Teacher:
         else:
             return 0.004
 
+    def __schedule_fine_tune(self, epoch):
+        if epoch < 5:
+            return 0.0008
+        if epoch < 10:
+            return 0.00016
+        else:
+            return 0.000032
+
     def __get_callbacks(self):
         csv_logger = CSVLogger(self.__path_log, append=True, separator=';')
         checkpointer = ModelCheckpoint(filepath=self.__model_path + self.__network_name + '.hdf5', verbose=1, save_best_only=True)
