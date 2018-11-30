@@ -10,7 +10,7 @@ class DataGenerator:
         self.__train_dir = os.path.join(base_dir, 'training')
         self.__validation_dir = os.path.join(base_dir, 'validation')
         self.__test_dir = os.path.join(base_dir, 'evaluation')
-        self.__batch_size = 20
+        self.__batch_size = setting.batch_size
         self.__class_mode = 'categorical'
         self.__train_datagen = ImageDataGenerator(rescale=1. / 255,
                                                   rotation_range=30,

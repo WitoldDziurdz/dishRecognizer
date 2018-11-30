@@ -6,3 +6,4 @@ class Setting:
         self.input_y = 256
         self.input_z = 3
         self.n_classes = 121
+        self.batch_size = 20
