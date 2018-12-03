@@ -28,7 +28,7 @@ public class RecognizingActivity extends AppCompatActivity {
 
     private Context context= this;
 
-    public String mCurrentPhotoPath;
+    private String mCurrentPhotoPath;
 
     private Button takePictureButton;
 
@@ -70,34 +70,47 @@ public class RecognizingActivity extends AppCompatActivity {
             }
         });
     }
+    private boolean isAllPermissionsGranted(int[] grantResults)
+    {
+        for(int result:grantResults)
+        {
+            if(result != PackageManager.PERMISSION_GRANTED)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case CAMERA_PERMISSIONS_GRANTED:
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                        Uri photoURI = FileProvider.getUriForFile(context,
-                                "com.example.android.fileprovider",
-                                photoFile);
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        if(isAllPermissionsGranted(grantResults)) {
+            switch (requestCode) {
+                case CAMERA_PERMISSIONS_GRANTED:
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        File photoFile = null;
+                        try {
+                            photoFile = createImageFile();
+                            Uri photoURI = FileProvider.getUriForFile(context,
+                                    "com.example.android.fileprovider",
+                                    photoFile);
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                            startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-                break;
-            case FILES_PERMISSIONS_GRANTED:
-                Intent intent;
-                intent = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                startActivityForResult(intent,PICK_IMAGE);
-                break;
+                    break;
+                case FILES_PERMISSIONS_GRANTED:
+                    Intent intent;
+                    intent = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, PICK_IMAGE);
+                    break;
+            }
         }
     }
 
