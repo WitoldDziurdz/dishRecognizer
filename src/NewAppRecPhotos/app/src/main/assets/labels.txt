@@ -1,101 +1,121 @@
-Apple Pie
-Baby Back Ribs
-Baklava
-Beef Carpaccio
-Beef Tartare
-Beet Salad
-Beignets
-Bibimbap
-Bread Pudding
-Breakfast Burrito
-Bruschetta
-Caesar Salad
-Cannoli
-Caprese Salad
-Carrot Cake
-Ceviche
-Cheesecake
-Cheese Plate
-Chicken Curry
-Chicken Quesadilla
-Chicken Wings
-Chocolate Cake
-Chocolate Mousse
-Churros
-Clam Chowder
-Club Sandwich
-Crab Cakes
-Creme Brulee
-Croque Madame
-Cup Cakes
-Deviled Eggs
-Donuts
-Dumplings
-Edamame
-Eggs Benedict
-Escargots
-Falafel
-Filet Mignon
-Fish And Chips
-Foie Gras
-French Fries
-French Onion Soup
-French Toast
-Fried Calamari
-Fried Rice
-Frozen Yogurt
-Garlic Bread
-Gnocchi
-Greek Salad
-Grilled Cheese Sandwich
-Grilled Salmon
-Guacamole
-Gyoza
-Hamburger
-Hot And Sour Soup
-Hot Dog
-Huevos Rancheros
-Hummus
-Ice Cream
-Lasagna
-Lobster Bisque
-Lobster Roll Sandwich
-Macaroni And Cheese
-Macarons
-Miso Soup
-Mussels
-Nachos
-Omelette
-Onion Rings
-Oysters
-Pad Thai
-Paella
-Pancakes
-Panna Cotta
-Peking Duck
-Pho
-Pizza
-Pork Chop
-Poutine
-Prime Rib
-Pulled Pork Sandwich
-Ramen
-Ravioli
-Red Velvet Cake
-Risotto
-Samosa
-Sashimi
-Scallops
-Seaweed Salad
-Shrimp And Grits
-Spaghetti Bolognese
-Spaghetti Carbonara
-Spring Rolls
-Steak
-Strawberry Shortcake
-Sushi
-Tacos
-Takoyaki
-Tiramisu
-Tuna Tartare
-Waffles
+apple pie
+baba wielkanocna
+baby back ribs
+baklava
+barszcz czerwony
+beef carpaccio
+beef tartare
+beet salad
+beignets
+bibimbap
+bigos
+bread pudding
+breakfast burrito
+bruschetta
+caesar salad
+cannoli
+caprese salad
+carrot cake
+ceviche
+cheesecake
+cheese plate
+chicken curry
+chicken quesadilla
+chicken wings
+chlodnik litewski
+chocolate cake
+chocolate mousse
+churros
+clam chowder
+club sandwich
+crab cakes
+creme brulee
+croque madame
+cup cakes
+deviled eggs
+donuts
+dumplings
+edamame
+eggs benedict
+escargots
+falafel
+faworki
+filet mignon
+fish and chips
+foie gras
+french fries
+french onion soup
+french toast
+fried calamari
+fried rice
+frozen yogurt
+galareta
+garlic bread
+gnocchi
+greek salad
+grilled cheese sandwich
+grilled salmon
+grochowka
+guacamole
+gulasz
+gyoza
+hamburger
+hot and sour soup
+hot dog
+huevos rancheros
+hummus
+ice cream
+kopytka
+lasagna
+lobster bisque
+lobster roll sandwich
+macaroni and cheese
+macarons
+miso soup
+mussels
+nachos
+omelette
+onion rings
+oysters
+pad thai
+paella
+pancakes
+panna cotta
+peking duck
+pho
+pierogi
+pizza
+pomidorowa
+pork chop
+poutine
+prime rib
+pulled pork sandwich
+pyzy
+racuchy
+ramen
+ravioli
+red velvet cake
+risotto
+rolada miesna
+rosol
+samosa
+sashimi
+scallops
+schabowy
+seaweed salad
+shrimp and grits
+spaghetti bolognese
+spaghetti carbonara
+spring rolls
+steak
+strawberry shortcake
+sushi
+tacos
+takoyaki
+tiramisu
+tuna tartare
+waffles
+zupa grzybowa
+zupa ogorkowa
+zupa szczawiowa
+zurek
